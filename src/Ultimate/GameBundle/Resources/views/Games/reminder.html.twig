@@ -1,0 +1,12 @@
+<h2>Ultimatefris.be Game Update!</h2>
+
+<p>The game "{{ game.title }}" is starting soon with {{ game.players|length }} players!</p>
+
+<p>Players who have submitted their names:</p>
+<ul>
+	{% for player in game.players %}
+		{% if player.name is not empty %}
+			<li>{{ player.name }}</li>
+		{% endif %}
+	{% endfor %}
+</ul>
