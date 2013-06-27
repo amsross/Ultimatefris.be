@@ -28,10 +28,12 @@
 					<label class="game-info"><strong>Info</strong></label>
 					<p class="span12">{{ game.info|e }}</p>
 
-					<div class="hidden">
+					<label class="game-players"><strong>Going</strong></label>
+					<p class="span12">
 						{% for player in game.getPlayers %}
+							{{ player.name|default("Anon")|trim() }}{% if loop.last == false %},{% endif %}
 						{% endfor %}
-					</div>
+					</p>
 
 					{{ macros.playercontrols(game) }}
 				</div>

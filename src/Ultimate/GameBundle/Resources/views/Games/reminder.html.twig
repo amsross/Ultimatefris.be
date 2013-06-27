@@ -5,8 +5,6 @@
 <p>Players who have submitted their names:</p>
 <ul>
 	{% for player in game.players %}
-		{% if player.name is not empty %}
-			<li>{{ player.name }}</li>
-		{% endif %}
+		<li>{{ player.name|default("Unknown") }}</li>
 	{% endfor %}
 </ul>
