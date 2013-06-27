@@ -25,15 +25,6 @@ The game database is searchable by location only. Any terms will be matched usin
 
 
 
-## Authors
-
-**Matt Ross**
-
-+ [http://rhinorojo.com](http://rhinorojo.com)
-+ [http://twitter.com/amsross](http://twitter.com/amsross)
-+ [http://github.com/amsross](http://github.com/amsross)
-
-
 ## Contributing
 
 **Just do it!**
@@ -43,3 +34,13 @@ The game database is searchable by location only. Any terms will be matched usin
 3. commit
 4. pull request
 5. cake
+
+
+
+## Authors
+
+**Matt Ross**
+
++ [http://rhinorojo.com](http://rhinorojo.com)
++ [http://twitter.com/amsross](http://twitter.com/amsross)
++ [http://github.com/amsross](http://github.com/amsross)
