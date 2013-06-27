@@ -9,9 +9,9 @@
 {% block content %}
 
 	{% for game in games %}
-	<div class="game">
+	<div class="game {% if game.date|date("U") < "-2 hours"|date("U") %}disabled{% endif %}">
 		<div class="row-fluid">
-			<h2 class="game-title span12">{{ game.title }}</h2>
+			<h2 class="game-title span12">{{ game.title }} {% if game.date|date("U") < "-2 hours"|date("U") %}<small>(expired)</small>{% endif %}</h2>
 		</div>
 		<div class="row-fluid">
 			<form class="well span12" action="/app_dev.php/games" method="post">

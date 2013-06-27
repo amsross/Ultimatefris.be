@@ -38,13 +38,20 @@ class GamesController extends FOSRestController
             ->getRepository('UltimateGameBundle:Game')
             ->createQueryBuilder('g')
             ->orderBy('g.date', 'DESC')
-            ->where("g.id IS NOT NULL");
+            ->where("g.id IS NOT NULL")
+            ;
 
         if ($request->query->get('s') !== null) {
 
             $entity = $entity
-                ->andWhere("g.location LIKE '%".$request->query->get('s')."%' OR g.title LIKE '%".$request->query->get('s')."%' OR g.info LIKE '%".$request->query->get('s')."%'");
-            $paramCounter++;
+				->andWhere("g.date >= :datelt")
+                ->andWhere("g.location LIKE '%".$request->query->get('s')."%' OR g.title LIKE '%".$request->query->get('s')."%' OR g.info LIKE '%".$request->query->get('s')."%'")
+				->setParameters(
+					array(
+						"datelt" => date('Y-m-d H:00:00', mktime(date("H")-2, 0, 0, date("m")  , date("d"), date("Y"))),
+					)
+				)
+                ;
         }
 
         // Limit result by id

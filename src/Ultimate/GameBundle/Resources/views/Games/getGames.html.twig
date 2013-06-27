@@ -26,7 +26,7 @@
 	<div class="row-fluid">
 		{% endif %}
 		{% set iterator = 0 %}
-		<div class="span4">
+		<div class="game span4 {% if game.date|date("U") < "-2 hours"|date("U") %}disabled{% endif %}">
 			<h4>{{ game.title }}</h4>
 			<p>
 				<a id="game_map_link" target="_blank" href="https://maps.google.com/maps?z=12&daddr={{ game.location }}">

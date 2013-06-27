@@ -498,6 +498,9 @@ body {
 		}
 
 	.game {}
+	.game.disabled {
+		opacity:0.5;
+	}
 		.game-title {
 			text-transform: capitalize;
 		}

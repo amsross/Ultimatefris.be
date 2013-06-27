@@ -2,7 +2,7 @@
 {% macro gamecontrols(game) %}
 	<p class="row-fluid btn-group text-center">
 		<a class="btn game-controls-view" href="{{ path('get_game', {'gId': game.id}) }}">View</a>
-		<a class="btn game-controls-going" href="javascript:;" data-game-id="{{ game.id }}" data-game-player-count="{{ game.players|length }}">Going ({{ game.players|length }})</a>
+		<a class="btn game-controls-going {% if game.date|date("U") < "-2 hours"|date("U") %}disabled{% endif %}" href="javascript:;" data-game-id="{{ game.id }}" data-game-player-count="{{ game.players|length }}">Going ({{ game.players|length }})</a>
 		{% if game.originIp == app.request.server.get("REMOTE_ADDR") %}
 		<!-- <a class="btn game-controls-edit" href="{{ path('edit_game', {'gId': game.id}) }}">Edit</a> -->
 		<a class="btn game-controls-remove" href="{{ path('remove_game', {'gId': game.id}) }}">Remove</a>
@@ -11,7 +11,7 @@
 {% endmacro %}
 {% macro playercontrols(game) %}
 	<div class="row-fluid">
-		<a class="btn span12 game-controls-going" href="javascript:;" data-game-id="{{ game.id }}" data-game-player-count="{{ game.players|length }}">Going ({{ game.players|length }})</a>
+		<a class="btn span12 game-controls-going {% if game.date|date("U") < "-2 hours"|date("U") %}disabled{% endif %}" href="javascript:;" data-game-id="{{ game.id }}" data-game-player-count="{{ game.players|length }}">Going ({{ game.players|length }})</a>
 	</div>
 {% endmacro %}
 <html>
@@ -132,6 +132,10 @@
 						that = this,
 						$targetBtn = $(evt.target)
 						;
+
+					if ($targetBtn.hasClass('disabled')) {
+						return false;
+					}
 					
 					$('.modal').modal('show');
 
