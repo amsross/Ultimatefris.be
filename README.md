@@ -1,6 +1,6 @@
 # [Ultimatefris.be](http://ultimatefris.be)
 
-Ultimatefris.be is intended to be a simple platform for announcing and joining games, with as little overhead and time spent as possible. It is development, created and maintained by [Matt Ross](http://rhinorojo.com/).
+Ultimatefris.be is intended to be a simple platform for announcing and joining games, with as little overhead and time spent as possible. It is development, created and maintained by [Matt Ross](http://rhinorojo.com/), using [Twitter Bootstrap](http://getboostrap.com) and [Symfony](http://symfony.com/) among other things.
 
 To get started, checkout [http://ultimatefris.be](http://ultimatefris.be)!
 
