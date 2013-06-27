@@ -103,9 +103,12 @@ class EmailCommand extends ContainerAwareCommand
 
 				if ($player !== null) {
 
+					$noSMS = $player->getNoSMS();
+					$noEmail = $player->getNoEmail();
+
 					$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
 
-					if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL)) {
+					if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL) && $noSMS !== true) {
 
 						// Compose the SMS message
 						$message = \Swift_Message::newInstance()
@@ -129,7 +132,7 @@ class EmailCommand extends ContainerAwareCommand
 
 					$playerEmail = $player->getEmail();
 
-					if (filter_var($playerEmail, FILTER_VALIDATE_EMAIL)) {
+					if (filter_var($playerEmail, FILTER_VALIDATE_EMAIL) && $noEmail !== true) {
 						
 						// Compose the email message
 						$message = \Swift_Message::newInstance()

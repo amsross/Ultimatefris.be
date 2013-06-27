@@ -130,6 +130,92 @@ class GamesController extends FOSRestController
 
 	            // set the 'Location' header only when creating new resources
 	            if (201 === $statusCode) {
+
+					$em = $this->getDoctrine()->getEntityManager();
+					$players = $em->createQueryBuilder()
+						->select('game.id, game.location, player.id, player.name')
+						->from('UltimateGameBundle:Game', 'game')
+						->innerJoin('game.players', 'player')
+						->where("game.location LIKE '%:location%'")
+						->setParameter("location", $entity->getLocation())
+						->andWhere("player.email IS NOT NULL OR player.phone IS NOT NULL")
+						->andWhere("player.id == 56")
+						->getQuery()
+						->getResult()
+						;
+
+					if (count($players) > 0) {
+
+						// Set up some variables
+						$this->doctrine = $this->get('doctrine');
+						$this->em = $this->doctrine->getManager();
+						$this->mailer = $this->get('mailer');
+						$this->spool = $this->mailer->getTransport()->getSpool();
+						$this->transport = $this->get('swiftmailer.transport.real');
+
+						foreach ($players as $player) {
+
+							if ($player !== null) {
+
+								$noSMS = $player->getNoSMS();
+								$noEmail = $player->getNoEmail();
+
+								$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
+
+								if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL) && $noSMS !== true) {
+
+									// Compose the SMS message
+									$message = \Swift_Message::newInstance()
+										->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
+										->setSender('noreply@ultimatefris.be')
+										->setTo($playerSMS)
+										->setContentType('text/plain')
+										->setBody(
+											$this->container->get('templating')->render(
+												'UltimateGameBundle:Games:notification-newGame.txt.twig',
+												array(
+													'game' => $game,
+												)
+											)
+										)
+									;
+
+									// Spool the current message
+									$this->mailer->send($message);
+								}
+
+								$playerEmail = $player->getEmail();
+
+								if (filter_var($playerEmail, FILTER_VALIDATE_EMAIL) && $noEmail !== true) {
+									
+									// Compose the email message
+									$message = \Swift_Message::newInstance()
+										->setSubject('Ultimatefris.be New Player Notification')
+										->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
+										->setSender('noreply@ultimatefris.be')
+										->setTo($playerEmail)
+										->setContentType('text/html')
+										->setBody(
+											$this->renderView(
+												'UltimateGameBundle:Games:notification-newGame.html.twig',
+												array(
+													'game' => $game,
+												)
+											)
+										)
+									;
+
+									// Spool the current message
+									$this->mailer->send($message);
+								}
+
+							}
+						}
+
+						// Send the spooled messages
+						$this->spool->flushQueue($this->transport);
+					}
+
 	            	return $this->redirect(
 	                    $this->generateUrl(
 	                        'get_game',
@@ -174,9 +260,12 @@ class GamesController extends FOSRestController
 
 			if ($player !== null) {
 
+				$noSMS = $player->getNoSMS();
+				$noEmail = $player->getNoEmail();
+
 				$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
 
-				if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL)) {
+				if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL) && $noSMS !== true) {
 
 					// Compose the SMS message
 					$message = \Swift_Message::newInstance()
@@ -201,7 +290,7 @@ class GamesController extends FOSRestController
 
 				$playerEmail = $player->getEmail();
 
-				if (filter_var($playerEmail, FILTER_VALIDATE_EMAIL)) {
+				if (filter_var($playerEmail, FILTER_VALIDATE_EMAIL) && $noEmail !== true) {
 					
 					// Compose the email message
 					$message = \Swift_Message::newInstance()

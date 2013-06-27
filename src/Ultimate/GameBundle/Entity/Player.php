@@ -49,6 +49,16 @@ class Player
 	 */
 	protected $lastIp;
 	
+	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $noSMS;
+	
+	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $noEmail;
+	
     /**
      * @ORM\ManyToMany(targetEntity="Game", mappedBy="players")
      */
@@ -264,5 +274,51 @@ class Player
     public function getLastIp()
     {
         return $this->lastIp;
+    }
+
+    /**
+     * Set noSMS
+     *
+     * @param boolean $noSMS
+     * @return Player
+     */
+    public function setNoSMS($noSMS)
+    {
+        $this->noSMS = $noSMS;
+
+        return $this;
+    }
+
+    /**
+     * Get noSMS
+     *
+     * @return boolean 
+     */
+    public function getNoSMS()
+    {
+        return $this->noSMS;
+    }
+
+    /**
+     * Set noEmail
+     *
+     * @param boolean $noEmail
+     * @return Player
+     */
+    public function setNoEmail($noEmail)
+    {
+        $this->noEmail = $noEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get noEmail
+     *
+     * @return boolean 
+     */
+    public function getNoEmail()
+    {
+        return $this->noEmail;
     }
 }
