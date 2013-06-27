@@ -44,6 +44,11 @@ class Player
 	 */
 	protected $email;
 	
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $lastIp;
+	
     /**
      * @ORM\ManyToMany(targetEntity="Game", mappedBy="players")
      */
@@ -236,5 +241,28 @@ class Player
     public function getCarrier()
     {
         return $this->carrier;
+    }
+
+    /**
+     * Set lastIp
+     *
+     * @param string $lastIp
+     * @return Player
+     */
+    public function setLastIp($lastIp)
+    {
+        $this->lastIp = $lastIp;
+
+        return $this;
+    }
+
+    /**
+     * Get lastIp
+     *
+     * @return string 
+     */
+    public function getLastIp()
+    {
+        return $this->lastIp;
     }
 }

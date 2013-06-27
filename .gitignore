@@ -8,3 +8,4 @@
 /bin/
 /composer.phar
 error_log
+.php~

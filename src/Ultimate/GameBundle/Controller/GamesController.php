@@ -145,6 +145,8 @@ class GamesController extends FOSRestController
 			'alltel' => 'sms.alltelwireless.com',
 			'att' => 'txt.att.net',
 			'bellsouth' => 'bellsouth.cl',
+			'cricket' => 'sms.mycricket.com',
+			'metropcs' => 'mymetropcs.com',
 			'sprint' => 'messaging.sprintpcs.com',
 			'tmobile' => 'tmomail.net',
 			'verizon' => 'vtext.com',
@@ -389,9 +391,10 @@ class GamesController extends FOSRestController
 		$players = $em->createQueryBuilder()
 			->select('p')
 			->from('UltimateGameBundle:Player p')
-			->where('p.phone = :phone OR p.email = :email')
+			->where('p.phone = :phone OR p.email = :email OR p.lastIp = :ip')
 			->setParameter('phone', $requestPlayer['phone'])
 			->setParameter('email', $requestPlayer['email'])
+			->setParameter('ip', $request->getClientIp())
 			->getQuery()
 			->getResult()
 			;
@@ -414,6 +417,7 @@ class GamesController extends FOSRestController
 		if (!empty($requestPlayer['email'])) {
 			$player->setEmail($requestPlayer['email']);
 		}
+		$player->setLastIp($request->getClientIp());
 
 		if ($game->getPlayers()->indexOf($player) === false) {
 			$this->sendNotifications($game, $player);

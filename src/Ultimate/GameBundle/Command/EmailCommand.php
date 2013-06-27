@@ -16,6 +16,8 @@ class EmailCommand extends ContainerAwareCommand
 			'alltel' => 'sms.alltelwireless.com',
 			'att' => 'txt.att.net',
 			'bellsouth' => 'bellsouth.cl',
+			'cricket' => 'sms.mycricket.com',
+			'metropcs' => 'mymetropcs.com',
 			'sprint' => 'messaging.sprintpcs.com',
 			'tmobile' => 'tmomail.net',
 			'verizon' => 'vtext.com',
