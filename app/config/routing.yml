@@ -1,0 +1,7 @@
+ultimate_default:
+    resource: "@UltimateDefaultBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ultimate_game:
+    resource: "@UltimateGameBundle/Resources/config/routing.yml"
+    prefix:   /

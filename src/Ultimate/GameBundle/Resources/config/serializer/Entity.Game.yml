@@ -1,0 +1,11 @@
+Ultimate\GameBundle\Entity\Game:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        date:
+            expose: true
+        title:
+            expose: true
+        location:
+            expose: true

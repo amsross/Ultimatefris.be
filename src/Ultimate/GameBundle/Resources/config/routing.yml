@@ -1,0 +1,15 @@
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+# ultimate_game_homepage:
+#     pattern:  /
+#     defaults: { _controller: UltimateGameBundle:Default:index }
+
+games:
+    type:     rest
+    resource: Ultimate\GameBundle\Controller\GamesController
+
+# comments:
+#     type:     rest
+#     parent:   users
+#     resource: Ultimate\GameBundle\Controller\CommentsController

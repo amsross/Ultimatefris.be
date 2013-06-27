@@ -1,0 +1,5 @@
+<h2>Ultimatefris.be Game Update!</h2>
+
+<p>The game "{{ game.title }}" has a new player{% if player.name is not empty %} ({{ player.name }}){% endif %}!</p>
+
+<p>There are currently {{ game.players|length + 1 }} players{% if game.players|length < 4 %}, just a few more and you're ready to rock{% endif %}!</p>

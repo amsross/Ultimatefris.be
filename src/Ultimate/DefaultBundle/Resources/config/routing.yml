@@ -1,0 +1,11 @@
+ultimate_default_index:
+    pattern:  /
+    defaults: { _controller: UltimateDefaultBundle:Default:index }
+
+ultimate_default_about:
+    pattern:  /about
+    defaults: { _controller: UltimateDefaultBundle:Default:about }
+
+ultimate_default_contact:
+    pattern:  /contact
+    defaults: { _controller: UltimateDefaultBundle:Default:contact }

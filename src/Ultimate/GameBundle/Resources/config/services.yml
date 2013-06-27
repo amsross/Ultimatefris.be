@@ -1,0 +1,7 @@
+parameters:
+#    ultimate_game.example.class: Ultimate\GameBundle\Example
+
+services:
+#    ultimate_game.example:
+#        class: %ultimate_game.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

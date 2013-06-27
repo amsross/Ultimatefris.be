@@ -1,0 +1,49 @@
+{% extends 'UltimateDefaultBundle:Default:base.html.twig' %}
+
+{% block title %}Contact &ndash; {{ parent() }}{% endblock title %}
+
+{% block jumbotron %}
+{% endblock jumbotron %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span6 offset3">
+			<h2>Contact</h2>
+
+			<form action="{{ path('ultimate_default_contact') }}" method="post" {{ form_enctype(form) }} class="clearfix">
+				{% if form.vars.errors|length > 0 %}
+					<div class="row-fluid">
+					{% for error in form.vars.errors %}
+							<div class="alert alert-error">
+								{{ error.message }}
+							</div>
+					{% endfor %}
+					</div>
+				{% endif %}
+				{% for label, flashes in app.session.flashbag.all %}
+					<div class="row-fluid">
+					{% for flash in flashes %}
+						<div class="alert alert-{{ label }}">
+							{{ flash }}
+						</div>
+					{% endfor %}
+					</div>
+				{% endfor %}
+				<div class="controls controls-row">
+					{{ form_widget(form.name) }}
+					{{ form_widget(form.email) }}
+				</div>
+				<div class="controls">
+					{{ form_widget(form.message) }}
+				</div>
+				<div class="hidden">
+					{{ form_rest(form) }}
+				</div>
+
+				<div class="controls">
+					<button id="contact-submit" type="submit" class="btn btn-primary input-medium pull-right">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock content %}
