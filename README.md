@@ -21,7 +21,7 @@ The game is tied to your IP address upon creation, so viewing the game from the 
 
 You can browse submitted games [here](http://ultimatefris.be/games).
 
-The game database is searchable by location only. Any terms will be matched using a simple SQL query of "LIKE '%terms%'". I would welcome any more advanced suggestions.
+The game database is searchable by location, title, and info. Any terms will be matched using a simple SQL query of "LIKE '%terms%'". I would welcome any more advanced suggestions.
 
 
 

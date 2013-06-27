@@ -43,8 +43,7 @@ class GamesController extends FOSRestController
         if ($request->query->get('s') !== null) {
 
             $entity = $entity
-                ->andWhere("g.location LIKE '%".$request->query->get('s')."%'");
-                // ->setParameter($paramCounter, $request->query->get('s'));
+                ->andWhere("g.location LIKE '%".$request->query->get('s')."%' OR g.title LIKE '%".$request->query->get('s')."%' OR g.info LIKE '%".$request->query->get('s')."%'");
             $paramCounter++;
         }
 
