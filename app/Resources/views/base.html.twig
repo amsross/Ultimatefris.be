@@ -43,14 +43,26 @@
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 	</head>
 	<body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=347872495314790";
+			fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 	{% block body %}
 		<div class="container-fluid">
 
 			<div class="masthead">
-				<div class="span6 pull-right">
-					<span class='st_googleplus_large pull-right' displayText='Google +'></span>
-					<span class='st_facebook_large pull-right' displayText='Facebook'></span>
-					<span class='st_twitter_large pull-right' displayText='Tweet'></span>
+				<div class="span6 pull-right text-right">
+					<div class="pull-right" style="margin-left:10px;"><a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="ultimatefris.be">Tweet</a></div>
+					<div class="pull-right" style="margin-left:10px;"><div class="fb-like" data-href="http://ultimatefris.be" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="lucida grande"></div></div>
+					<div class="pull-right" style="margin-left:10px;"><div class="g-plusone" data-size="tall" data-annotation="none"></div></div>
+					<!-- <span class='st_googleplus_large pull-right' displayText='Google +'></span> -->
+					<!-- <span class='st_facebook_large pull-right' displayText='Facebook'></span> -->
+					<!-- <span class='st_twitter_large pull-right' displayText='Tweet'></span> -->
 				</div>
 				<h3 class="muted ">Ultimatefris.be</h3>
 				<div class="navbar" data-spy="affix" data-offset-top="80">
@@ -106,8 +118,8 @@
 			%}
 			<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
-		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-		<script type="text/javascript">stLight.options({publisher: "8270394b-e21e-4b5f-96e0-bb1de1cf7752", doNotHash: true, doNotCopy: true, hashAddressBar: true});</script>
+		<!-- <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script> -->
+		<!-- <script type="text/javascript">stLight.options({publisher: "8270394b-e21e-4b5f-96e0-bb1de1cf7752", doNotHash: true, doNotCopy: true, hashAddressBar: true});</script> -->
 		<script type="text/javascript">
 			$(function() {
 
@@ -148,6 +160,13 @@
 					});
 				});
 			});
+		</script>
+		<script type="text/javascript">
+		  (function() {
+		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		    po.src = 'https://apis.google.com/js/plusone.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		  })();
 		</script>
 	{% endblock %}
 	<div class="modal hide fade">
