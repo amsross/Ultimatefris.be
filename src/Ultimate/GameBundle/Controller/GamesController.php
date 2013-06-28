@@ -45,9 +45,10 @@ class GamesController extends FOSRestController
 
             $entity = $entity
 				->andWhere("g.date >= :datelt")
-                ->andWhere("g.location LIKE '%".$request->query->get('s')."%' OR g.title LIKE '%".$request->query->get('s')."%' OR g.info LIKE '%".$request->query->get('s')."%'")
+                ->andWhere("g.location LIKE :search OR g.title LIKE :search OR g.info LIKE :search")
 				->setParameters(
 					array(
+						"search" => $request->query->get('s'),
 						"datelt" => date('Y-m-d H:00:00', mktime(date("H")-2, 0, 0, date("m")  , date("d"), date("Y"))),
 					)
 				)
@@ -133,13 +134,18 @@ class GamesController extends FOSRestController
 
 					$em = $this->getDoctrine()->getEntityManager();
 					$players = $em->createQueryBuilder()
-						->select('game.id, game.location, player.id, player.name')
-						->from('UltimateGameBundle:Game', 'game')
-						->innerJoin('game.players', 'player')
-						->where("game.location LIKE '%:location%'")
-						->setParameter("location", $entity->getLocation())
+						->select('player')
+						->from('UltimateGameBundle:Player', 'player')
+						->innerJoin('player.games', 'game')
+						->where("player.id IS NOT NULL")
+						->andWhere("game.location = :location")
 						->andWhere("player.email IS NOT NULL OR player.phone IS NOT NULL")
-						->andWhere("player.id == 56")
+						// ->andWhere("player.id = 56")
+						->setParameters(
+							array(
+								"location" => $entity->getLocation(),
+							)
+						)
 						->getQuery()
 						->getResult()
 						;
@@ -157,8 +163,15 @@ class GamesController extends FOSRestController
 
 							if ($player !== null) {
 
+								$newPlayer = null;
+								
+								$subject = "New Game Notification";
+
 								$noSMS = $player->getNoSMS();
 								$noEmail = $player->getNoEmail();
+
+								$templateSMS = 'UltimateGameBundle:Games:notification-newGame.txt.twig';
+								$templateEmail = 'UltimateGameBundle:Games:notification-newGame.html.twig';
 
 								$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
 
@@ -172,9 +185,10 @@ class GamesController extends FOSRestController
 										->setContentType('text/plain')
 										->setBody(
 											$this->container->get('templating')->render(
-												'UltimateGameBundle:Games:notification-newGame.txt.twig',
+												$templateSMS,
 												array(
-													'game' => $game,
+													'game' => $entity,
+													'player' => $newPlayer,
 												)
 											)
 										)
@@ -190,16 +204,17 @@ class GamesController extends FOSRestController
 									
 									// Compose the email message
 									$message = \Swift_Message::newInstance()
-										->setSubject('Ultimatefris.be New Player Notification')
+										->setSubject("Ultimatefris.be $subject")
 										->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
 										->setSender('noreply@ultimatefris.be')
 										->setTo($playerEmail)
 										->setContentType('text/html')
 										->setBody(
 											$this->renderView(
-												'UltimateGameBundle:Games:notification-newGame.html.twig',
+												$templateEmail,
 												array(
-													'game' => $game,
+													'game' => $entity,
+													'player' => $newPlayer,
 												)
 											)
 										)
@@ -259,9 +274,14 @@ class GamesController extends FOSRestController
 		foreach ($players as $player) {
 
 			if ($player !== null) {
+				
+				$subject = "New Player Notification";
 
 				$noSMS = $player->getNoSMS();
 				$noEmail = $player->getNoEmail();
+
+				$templateSMS = 'UltimateGameBundle:Games:notification.txt.twig';
+				$templateEmail = 'UltimateGameBundle:Games:notification.html.twig';
 
 				$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
 
@@ -275,7 +295,7 @@ class GamesController extends FOSRestController
 						->setContentType('text/plain')
 						->setBody(
 							$this->container->get('templating')->render(
-								'UltimateGameBundle:Games:notification.txt.twig',
+								$templateSMS,
 								array(
 									'game' => $game,
 									'player' => $newPlayer,
@@ -294,14 +314,14 @@ class GamesController extends FOSRestController
 					
 					// Compose the email message
 					$message = \Swift_Message::newInstance()
-						->setSubject('Ultimatefris.be New Player Notification')
+						->setSubject("Ultimatefris.be $subject")
 						->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
 						->setSender('noreply@ultimatefris.be')
 						->setTo($playerEmail)
 						->setContentType('text/html')
 						->setBody(
 							$this->renderView(
-								'UltimateGameBundle:Games:notification.html.twig',
+								$templateEmail,
 								array(
 									'game' => $game,
 									'player' => $newPlayer,

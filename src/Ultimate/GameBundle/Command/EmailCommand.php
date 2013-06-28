@@ -64,7 +64,7 @@ class EmailCommand extends ContainerAwareCommand
 		return $phoneNumber;
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output, $newPlayer = null)
 	{
 		
 		date_default_timezone_set ('America/New_York');
@@ -103,8 +103,13 @@ class EmailCommand extends ContainerAwareCommand
 
 				if ($player !== null) {
 
+					$subject = "Game Reminder";
+
 					$noSMS = $player->getNoSMS();
 					$noEmail = $player->getNoEmail();
+
+					$templateSMS = 'UltimateGameBundle:Games:reminder.txt.twig';
+					$templateEmail = 'UltimateGameBundle:Games:reminder.html.twig';
 
 					$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
 
@@ -118,9 +123,10 @@ class EmailCommand extends ContainerAwareCommand
 							->setContentType('text/plain')
 							->setBody(
 								$this->container->get('templating')->render(
-									'UltimateGameBundle:Games:reminder.txt.twig',
+									$templateSMS,
 									array(
 										'game' => $game,
+										'player' => $newPlayer,
 									)
 								)
 							)
@@ -136,16 +142,17 @@ class EmailCommand extends ContainerAwareCommand
 						
 						// Compose the email message
 						$message = \Swift_Message::newInstance()
-							->setSubject('Ultimatefris.be Game Reminder')
+							->setSubject("Ultimatefris.be $subject")
 							->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
 							->setSender('noreply@ultimatefris.be')
 							->setTo($playerEmail)
 							->setContentType('text/html')
 							->setBody(
 								$this->container->get('templating')->render(
-									'UltimateGameBundle:Games:reminder.html.twig',
+									$templateEmail,
 									array(
 										'game' => $game,
+										'player' => $newPlayer,
 									)
 								)
 							)

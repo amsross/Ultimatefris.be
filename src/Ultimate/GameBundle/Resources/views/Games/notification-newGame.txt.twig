@@ -1,1 +1,1 @@
-A new game ("{{ game.title }}") has been listed at {{ game.location }}! on {{ game.date|date("F jS \\a\\t g:ia") }}. Why not join in?
+A new game has been listed at {{ game.location }}! on {{ game.date|date("F jS \\a\\t g:ia") }}. Why not join in? {{ url('get_game', {gId: game.id} ) }}
