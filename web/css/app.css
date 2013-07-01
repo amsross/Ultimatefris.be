@@ -112,6 +112,7 @@ body {
 		}
 
 	.game {}
+	div.disabled,
 	.game.disabled {
 		opacity:0.5;
 	}
