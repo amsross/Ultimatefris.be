@@ -110,30 +110,33 @@ class EmailCommand extends ContainerAwareCommand
 
 					$templateSMS = 'UltimateGameBundle:Games:reminder.txt.twig';
 					$templateEmail = 'UltimateGameBundle:Games:reminder.html.twig';
+				
+					if (in_array($player->getCarrier(), $this->carriers) && $noSMS !== true) {
+						
+						$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
 
-					$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
+						if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL)) {
 
-					if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL) && $noSMS !== true) {
-
-						// Compose the SMS message
-						$message = \Swift_Message::newInstance()
-							->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
-							->setSender('noreply@ultimatefris.be')
-							->setTo($playerSMS)
-							->setContentType('text/plain')
-							->setBody(
-								$this->container->get('templating')->render(
-									$templateSMS,
-									array(
-										'game' => $game,
-										'player' => $newPlayer,
+							// Compose the SMS message
+							$message = \Swift_Message::newInstance()
+								->setFrom(array('noreply@ultimatefris.be' => 'Ultimatefris.be'))
+								->setSender('noreply@ultimatefris.be')
+								->setTo($playerSMS)
+								->setContentType('text/plain')
+								->setBody(
+									$this->container->get('templating')->render(
+										$templateSMS,
+										array(
+											'game' => $game,
+											'player' => $newPlayer,
+										)
 									)
 								)
-							)
-						;
+							;
 
-						// Spool the current message
-						$this->mailer->send($message);
+							// Spool the current message
+							$this->mailer->send($message);
+						}
 					}
 
 					$playerEmail = $player->getEmail();
