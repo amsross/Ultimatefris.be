@@ -14,7 +14,7 @@
 			<h2 class="game-title span12">{{ game.title }} {% if game.date|date("U") < "-2 hours"|date("U") %}<small>(expired)</small>{% endif %}</h2>
 		</div>
 		<div class="row-fluid">
-			<form class="well span12" action="/app_dev.php/games" method="post">
+			<div class="well span12">
 				<div class="span4">
 					<label class="game-title"><strong>Title</strong></label>
 					<p class="span12">{{ game.title|capitalize }}</p>
@@ -43,10 +43,23 @@
 						<img id="game_map" class="span12" src="http://maps.googleapis.com/maps/api/staticmap?center={{ game.location }}&zoom=14&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:G%7C{{ game.location }}&sensor=false" />
 					</a>
 				</div>
-			</form>
+			</div>
 			{% if game.originIp == app.request.server.get("REMOTE_ADDR") %}
 				<!-- <small class="muted">(<a class="game-controls-edit" href="{{ path('edit_game', {'gId': game.id}) }}">edit</a>)</small> -->
 			{% endif %}
+		</div>
+		<div class="row-fluid disabled">
+			<div class="well span6">
+				<h4>Comments</h4>
+			</div>
+			<div class="well span6">
+				<h4>Comment</h4>
+				<form action="#{#{ path('post_games') }#}" method="post">
+					<input type="text" class="span12" name="comment[name]" id="comment_name" placeholder="Name" />
+					<textarea class="span12" name="comment[message]" id="comment_message" placeholder="Your Message..." ></textarea>
+					<button class="btn btn-primary disabled">Comment</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	{% endfor %}
