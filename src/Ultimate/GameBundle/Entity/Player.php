@@ -81,6 +81,14 @@ class Player
 
 			$phoneNumber = '1'.$areaCode.$nextThree.$lastFour;
 
+		} else if(strlen($phoneNumber) == 11) {
+
+			$areaCode = substr($phoneNumber, 1, 3);
+			$nextThree = substr($phoneNumber, 4, 3);
+			$lastFour = substr($phoneNumber, 7, 4);
+
+			$phoneNumber = '1'.$areaCode.$nextThree.$lastFour;
+
 		} else {
 
 			// We'll definitely need the area code, so break here

@@ -173,7 +173,7 @@ class GamesController extends FOSRestController
 								$templateSMS = 'UltimateGameBundle:Games:notification-newGame.txt.twig';
 								$templateEmail = 'UltimateGameBundle:Games:notification-newGame.html.twig';
 
-								$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
+								$playerSMS = $player->getPhone() . '@' . @$this->carriers[$player->getCarrier()];
 
 								if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL) && $noSMS !== true) {
 
@@ -283,8 +283,8 @@ class GamesController extends FOSRestController
 				$templateSMS = 'UltimateGameBundle:Games:notification.txt.twig';
 				$templateEmail = 'UltimateGameBundle:Games:notification.html.twig';
 
-				$playerSMS = $player->getPhone() . '@' . $this->carriers[$player->getCarrier()];
-
+				$playerSMS = $player->getPhone() . '@' . @$this->carriers[$player->getCarrier()];
+				
 				if (filter_var($playerSMS, FILTER_VALIDATE_EMAIL) && $noSMS !== true) {
 
 					// Compose the SMS message
@@ -507,7 +507,7 @@ class GamesController extends FOSRestController
 			->select('p')
 			->from('UltimateGameBundle:Player p')
 			->where('p.phone = :phone OR p.email = :email OR p.lastIp = :ip')
-			->setParameter('phone', $requestPlayer['phone'])
+			->setParameter('phone', preg_replace('/[^0-9]/','',$requestPlayer['phone']))
 			->setParameter('email', $requestPlayer['email'])
 			->setParameter('ip', $request->getClientIp())
 			->getQuery()
@@ -524,7 +524,9 @@ class GamesController extends FOSRestController
 			$player->setName($requestPlayer['name']);
 		}
 		if (!empty($requestPlayer['phone'])) {
-			$player->setPhone($requestPlayer['phone']);
+
+			$player->setPhone(preg_replace('/[^0-9]/','',$requestPlayer['phone']));
+			// $player->setPhone($requestPlayer['phone']);
 		}
 		if (!empty($requestPlayer['carrier'])) {
 			$player->setCarrier($requestPlayer['carrier']);
