@@ -137,38 +137,45 @@
 						$targetBtn = $(evt.target)
 						;
 
+					window.targetBtn = $targetBtn;
+
 					if ($targetBtn.hasClass('disabled')) {
 						return false;
 					}
 					
 					$('.modal').modal('show');
 
-					$('.modal').one('hidden', function (modal) {
-						var
-							$targetModal = $(modal.target),
-							playerName = $targetModal.find('#player_name').val(),
-							playerPhone = $targetModal.find('#player_phone').val(),
-							playerCarrier = $targetModal.find('#player_carrier option:selected').val(),
-							playerEmail = $targetModal.find('#player_email').val()
-							;
-						// console.log(modal);
+					evt.preventDefault();
+				});
 
-						$.ajax({
-							type: 'POST',
-							url: Routing.generate('post_game_players', {gId: $targetBtn.data('game-id')}),
-							data: {
-								player: {
-									name: playerName,
-									phone: playerPhone,
-									carrier: playerCarrier,
-									email: playerEmail
-								}
+				$('.modal .btn-primary').on('click', function (evt) {
+
+					var
+						$targetModal = $(evt.target).parents('.modal'),
+						playerName = $targetModal.find('#player_name').val(),
+						playerPhone = $targetModal.find('#player_phone').val(),
+						playerCarrier = $targetModal.find('#player_carrier option:selected').val(),
+						playerEmail = $targetModal.find('#player_email').val(),
+						$targetBtn = window.targetBtn
+						;
+
+					$.ajax({
+						type: 'POST',
+						url: Routing.generate('post_game_players', {gId: $targetBtn.data('game-id')}),
+						data: {
+							player: {
+								name: playerName,
+								phone: playerPhone,
+								carrier: playerCarrier,
+								email: playerEmail
 							}
-						}).done(function(data) {
-							$targetBtn.data('game-player-count', $targetBtn.data('game-player-count')+1);
-							$targetBtn.html("Going ("+$targetBtn.data('game-player-count')+")")
-						});
+						}
+					}).done(function(data) {
+						$targetBtn.data('game-player-count', $targetBtn.data('game-player-count')+1);
+						$targetBtn.html("Going ("+$targetBtn.data('game-player-count')+")")
 					});
+
+					evt.preventDefault();
 				});
 			});
 		</script>
@@ -221,6 +228,7 @@
 			{% endblock modalBody %}
 		</div>
 		<div class="modal-footer">
+			<a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
 			<a href="#" class="btn btn-primary" data-dismiss="modal">OK!</a>
 		</div>
 	</div>
