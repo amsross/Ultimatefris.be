@@ -1,5 +1,5 @@
 <h2>Ultimatefris.be Game Update!</h2>
 
-<p>The game "{{ game.title }}" has a new player ({{ player.name|default("Anon") }})!</p>
+<p>The game "<a href="{{ url('get_game', {gId: game.id} ) }}">{{ game.title }}</a>" has a new player ({{ player.name|default("Anon") }})!</p>
 
 <p>There are currently {{ game.players|length + 1 }} players{% if game.players|length < 4 %}, just a few more and you're ready to rock{% endif %}!</p>

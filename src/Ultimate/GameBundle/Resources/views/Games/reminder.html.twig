@@ -1,6 +1,6 @@
 <h2>Ultimatefris.be Game Update!</h2>
 
-<p>The game "{{ game.title }}" is starting soon with {{ game.players|length }} players!</p>
+<p>The game "<a href="{{ url('get_game', {gId: game.id} ) }}">{{ game.title }}</a>" is starting soon with {{ game.players|length }} players!</p>
 
 <p>Players who have submitted their names:</p>
 <ul>
