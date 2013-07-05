@@ -3,6 +3,9 @@
 
 {% block title %}{{ games.0.title|default("View Game")|capitalize }} &ndash; {{ parent() }}{% endblock title %}
 
+{% block fbtitle %}{{ parent() }} &ndash; {{ games.0.title|default("View Game")|capitalize }}{% endblock fbtitle %}
+{% block fbdescription %}{{ games.0.date|date("F jS \\a\\t g:ia") }} at {{ games.0.location }}{% endblock fbdescription %}
+
 {% block jumbotron %}
 {% endblock jumbotron %}
 

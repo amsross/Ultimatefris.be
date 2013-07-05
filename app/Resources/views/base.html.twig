@@ -26,6 +26,9 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport">
+		<meta property="og:url" content="{% block fburl %}{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}{% endblock fburl %}" />
+		<meta property="og:title" content="{% block fbtitle %}Ultimatefris.be{% endblock fbtitle %}" />
+		<meta property="og:description" content="{% block fbdescription %}Ultimate Frisbee pickups games in any area!{% endblock fbdescription %}" />
 		{% javascripts
 			'http://html5shiv.googlecode.com/svn/trunk/html5.js'
 			%}
