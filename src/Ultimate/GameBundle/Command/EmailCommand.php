@@ -83,12 +83,12 @@ class EmailCommand extends ContainerAwareCommand
 			->getRepository('UltimateGameBundle:Game')
 			->createQueryBuilder('g')
 			->where("g.id IS NOT NULL")
-			->andWhere("g.date >= ?1")
+			->andWhere("g.date > ?1")
 			->andWhere("g.date <= ?2")
 			->setParameters(
 				array(
 					1 => date('Y-m-d H:00:00', mktime(date("H"), 0, 0, date("m")  , date("d"), date("Y"))),
-					2 => date('Y-m-d H:31:00', mktime(date("H")+1, 0, 0, date("m")  , date("d"), date("Y")))
+					2 => date('Y-m-d H:00:00', mktime(date("H")+1, 0, 0, date("m")  , date("d"), date("Y")))
 				)
 			)
 			->getQuery()
