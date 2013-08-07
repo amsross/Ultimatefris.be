@@ -48,7 +48,7 @@ class GamesController extends FOSRestController
                 ->andWhere("g.location LIKE :search OR g.title LIKE :search OR g.info LIKE :search")
 				->setParameters(
 					array(
-						"search" => $request->query->get('s'),
+						"search" => '%' . $request->query->get('s') . '%',
 						"datelt" => date('Y-m-d H:00:00', mktime(date("H")-2, 0, 0, date("m")  , date("d"), date("Y"))),
 					)
 				)
