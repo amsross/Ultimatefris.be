@@ -1,3 +1,7 @@
+ultimate_site:
+    resource: "@UltimateSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ultimate_game:
     resource: "@UltimateGameBundle/Controller/GameController.php"
     type:     annotation

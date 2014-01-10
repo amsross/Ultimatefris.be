@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Ultimate\GameBundle\UltimateGameBundle(),
+            new Ultimate\SiteBundle\UltimateSiteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

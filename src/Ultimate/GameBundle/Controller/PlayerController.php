@@ -9,23 +9,23 @@ use
 	Symfony\Component\HttpFoundation\RedirectResponse
 	;
 
-class GameController extends Controller
+class PlayerController extends Controller
 {
 
 	/**
-	 * @Route("/{id}", name="get_game")
+	 * @Route("/{id}", name="get_player")
 	 * @Template()
 	 */
-	public function getGameAction($id)
+	public function getPlayerAction($id)
 	{
 		return array('id' => $id);
 	}
 
 	/**
-	 * @Route("/", name="get_games")
+	 * @Route("/", name="get_players")
 	 * @Template()
 	 */
-	public function getGamesAction()
+	public function getPlayersAction()
 	{
 		return array();
 	}
