@@ -1,7 +1,4 @@
-ultimate_default:
-    resource: "@UltimateDefaultBundle/Resources/config/routing.yml"
-    prefix:   /
-
 ultimate_game:
-    resource: "@UltimateGameBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@UltimateGameBundle/Controller/GameController.php"
+    type:     annotation
+    prefix:   /games

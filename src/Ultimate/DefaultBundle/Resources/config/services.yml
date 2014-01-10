@@ -1,7 +1,0 @@
-parameters:
-#    ultimate_default.example.class: Ultimate\DefaultBundle\Example
-
-services:
-#    ultimate_default.example:
-#        class: %ultimate_default.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
